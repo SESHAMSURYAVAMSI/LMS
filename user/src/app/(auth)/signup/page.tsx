@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import CaptchaMock from "@/components/ui/CaptchaMock";
 
+
 export default function SignupPage() {
   const [prefix, setPrefix] = useState<string>("");
   const [fullName, setFullName] = useState<string>("");
@@ -138,7 +139,7 @@ export default function SignupPage() {
 
           {/* Right side - illustration */}
           <div className="flex-1 flex items-center justify-center bg-[#f9fcff]">
-            <Image src="/login_pic.jpeg" alt="Illustration" width={400} height={400} />
+            <Image src="/signup1.jpg" alt="Illustration" width={400} height={400} />
           </div>
 
         </div>
@@ -147,7 +148,7 @@ export default function SignupPage() {
       {/* Footer */}
       <footer className="w-full relative bg-gradient-to-r from-[#d0ebff] to-[#a9d6fb]">
         <div className="max-w-6xl mx-auto flex justify-end items-center py-3 text-sm text-gray-600">
-          <div className="absolute right-0 bottom-1 flex items-center gap-1 mr-2 mb-2">
+          <div className="absolute right-2 bottom-2 flex items-center gap-1 mr-2 mb-2">
             <span className="mr-1">Educational Grant By</span>
             <Image src="/sun_pharma.png" alt="Sun Pharma" width={40} height={40} className="object-contain" />
           </div>
