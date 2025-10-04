@@ -1,48 +1,48 @@
+// Header.tsx
 "use client";
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useLogin } from "../context/LoginContext"; // ✅ use context
 
 export default function Header() {
   const router = useRouter();
+  const { isLoggedIn, logout } = useLogin();
 
   const handleLogout = () => {
-    // ✅ Here you can also clear tokens/session if needed
-    router.push("/login"); // Redirect to login page
+    logout(); // clears context & localStorage
+    router.push("/login");
   };
 
   return (
     <header className="w-full bg-gradient-to-r from-blue-100 to-blue-200 p-4 shadow-md flex items-center justify-between">
-      {/* Left section: Logo + Title */}
       <div className="flex items-center gap-4">
         <Image
-          src="/urological.png" // Place your logo inside /public
-          alt="Urological Society of India Logo"
+          src="/urological.png"
+          alt="Logo"
           width={180}
           height={180}
-          className="ml-2"
         />
-        {/* <h1 className="text-lg font-bold text-blue-900">
-          Urological Society of India
-        </h1> */}
       </div>
 
-      {/* Right section: Profile + Logout */}
-      <div className="flex items-center gap-4">
-        {/* Profile */}
-        <Image
-          src="/profile.jpeg" // Add a profile image in /public/profile.png
-          alt="Profile"
-          width={40}
-          height={40}
-          className="rounded-full border"
-        />
-
-        {/* Logout Button */}
-        <button className="bg-orange-500 text-white font-semibold px-6 py-2 rounded-full hover:bg-orange-600 transition">
-          Logout
-        </button>
-      </div>
+      {/* Show Logout + profile only when logged in */}
+      {isLoggedIn && (
+        <div className="flex items-center gap-4">
+          <Image
+            src="/profile.jpeg"
+            alt="Profile"
+            width={40}
+            height={40}
+            className="rounded-full border"
+          />
+          <button
+            onClick={handleLogout}
+            className="bg-orange-500 text-white font-semibold px-6 py-2 rounded-full hover:bg-orange-600 transition"
+          >
+            Logout
+          </button>
+        </div>
+      )}
     </header>
   );
 }
