@@ -3,7 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import CaptchaMock from "@/components/ui/CaptchaMock";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function SignupPage() {
   const [prefix, setPrefix] = useState<string>("");
@@ -15,17 +15,24 @@ export default function SignupPage() {
   const [termsAccepted, setTermsAccepted] = useState<boolean>(false);
 
   const router = useRouter();
+  const recaptchaRef: ReCAPTCHA | null = null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // 👉 You can add validation or API call here
     if (!termsAccepted) {
       alert("Please accept Terms & Conditions before signing up.");
       return;
     }
 
-    // For now, simply redirect after "successful signup"
+    // // Execute invisible reCAPTCHA
+    // if (recaptchaRef) {
+    //   const token = await recaptchaRef.executeAsync();
+    //   console.log("Captcha token:", token);
+    //   recaptchaRef.reset();
+    // }
+
+    // For now, redirect after "successful signup"
     router.push("/login");
   };
 
@@ -123,8 +130,14 @@ export default function SignupPage() {
                 />
               </div>
 
-              {/* Mock reCAPTCHA */}
-              <CaptchaMock />
+              {/* reCAPTCHA invisible */}
+      <div>
+        <label className="block text-label mb-2">reCAPTCHA</label>
+        <ReCAPTCHA
+          sitekey="your_site_key_here"
+          onChange={(val) => console.log("captcha", val)}
+        />
+      </div>
 
               <div className="flex items-center gap-2">
                 <input
@@ -161,8 +174,19 @@ export default function SignupPage() {
           </div>
 
           {/* Right side - illustration */}
-          <div className="flex-1 flex items-center justify-center bg-[#f9fcff]">
-            <Image src="/signup.jpg" alt="Illustration" width={400} height={400} />
+          {/* <div className="flex-1 flex items-center justify-center bg-[#f9fcff] relative">
+            <Image
+              src="/signup.jpg"
+              alt="Illustration"
+              fill
+              className="object-contain p-6"
+              priority
+            />
+          </div> */}
+          <div className="flex-1 flex items-center justify-center bg-[#f9fcff] ">
+            <Image src="/signup.jpg" alt="Illustration" 
+            width={400} height={400}
+            />
           </div>
         </div>
       </div>

@@ -2,7 +2,8 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import CaptchaMock from "@/components/ui/CaptchaMock";
+// import CaptchaMock from "@/components/ui/CaptchaMock";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function Login() {
   const router = useRouter();
@@ -72,12 +73,20 @@ export default function Login() {
                 Forgot Password?
               </a>
 
-              {/* Mock reCAPTCHA */}
+              {/* Mock reCAPTCHA
               <CaptchaMock />
 
               {error && (
                 <p className="text-red-500 text-sm font-medium">{error}</p>
-              )}
+              )} */}
+     {/* reCAPTCHA invisible */}
+      <div>
+        <label className="block text-label mb-2">reCAPTCHA</label>
+        <ReCAPTCHA
+          sitekey="your_site_key_here"
+          onChange={(val) => console.log("captcha", val)}
+        />
+      </div>
 
               <button
                 type="submit"
