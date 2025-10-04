@@ -20,17 +20,17 @@ export default function Sidebar() {
 
   return (
     <aside className="w-64 bg-white shadow-md flex flex-col">
-      <div className="p-4 border-b flex items-center gap-2">
+      {/* <div className="p-4 border-b flex items-center gap-2">
         <Image src="/logo.png" alt="Logo" width={40} height={40} />
         <h2 className="font-bold text-blue-900">Urological Society of India</h2>
-      </div>
+      </div> */}
       <nav className="flex-1 p-2 space-y-2">
         {menuItems.map((item) => (
           <Link
             key={item.path}
             href={item.path}
             className={cn(
-              "flex items-center gap-2 p-3 rounded-lg text-gray-700 hover:bg-orange-100",
+              "flex items-center gap-2 p-3 rounded-lg text-gray-700 hover:bg-orange-100 ",
               pathname === item.path && "bg-orange-500 text-white"
             )}
           >
@@ -38,7 +38,7 @@ export default function Sidebar() {
           </Link>
         ))}
       </nav>
-      <div className="p-4 text-xs text-gray-500 border-t">
+      <div className="p-4 text-xs text-gray-500 flex flex-col items-center text-center">
         <span>Educational Grant By</span>
         <Image
           src="/sun_pharma.png"

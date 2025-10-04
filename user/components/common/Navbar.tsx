@@ -2,8 +2,6 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-// Update the import path below to the correct relative path if needed
-// Update the import path below to the correct relative path if needed
 import { cn } from "@/lib/utils";
 
 export default function Navbar() {
@@ -20,7 +18,7 @@ export default function Navbar() {
 
   return (
     <header className="w-full flex items-center justify-between bg-gradient-to-r from-[#d8eefe] to-[#f7fbff] px-6 py-3 shadow-sm">
-      {/* Logo + Title */}
+      {/* Logo + Title
       <div className="flex items-center gap-3">
         <Image
           src="/logo.png"
@@ -32,7 +30,7 @@ export default function Navbar() {
         <h1 className="text-lg font-semibold text-sky-900">
           Urological Society of India
         </h1>
-      </div>
+      </div> */}
 
       {/* Right Section - Avatar + Logout */}
       <div className="flex items-center gap-4">
