@@ -1,7 +1,7 @@
 "use client";
 
 // Update the import path below if Sidebar exists elsewhere, e.g.:
-import Sidebar from "../../components/ui/Sidebar";
+import Sidebar from "../../../components/ui/Sidebar";
 // Or create the Sidebar component at src/components/ui/Sidebar.tsx if it does not exist.
 
 export default function DashboardLayout({
