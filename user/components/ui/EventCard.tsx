@@ -1,45 +1,52 @@
 "use client";
 import Image from "next/image";
-
-type Event = {
-  name: string;
-  date: string;
-  location: string;
-  videos: number;
-};
-
 import React from "react";
 
-interface EventCardProps {
+interface Event {
+  id: number;
   title: string;
-  startDate: string;
-  endDate: string;
+  date: string; // "startDate - endDate"
   location: string;
-  videosCount: number;
-  onRegister: () => void;
+  videos: number;
+  image: string;
 }
 
-const EventCard: React.FC<EventCardProps> = ({
-  title,
-  startDate,
-  endDate,
-  location,
-  videosCount,
-  onRegister,
-}) => (
-  <div className="bg-white rounded shadow p-4 flex flex-col gap-2">
-    <h2 className="text-xl font-bold">{title}</h2>
-    <p>
-      {startDate} - {endDate} | {location}
-    </p>
-    <p>Videos: {videosCount}</p>
-    <button
-      className="mt-2 px-4 py-2 bg-sky-600 text-white rounded"
-      onClick={onRegister}
-    >
-      Register
-    </button>
-  </div>
-);
+interface EventCardProps {
+  event: Event;
+  onRegister?: () => void;
+}
+
+const EventCard: React.FC<EventCardProps> = ({ event, onRegister }) => {
+  const [startDate, endDate] = event.date.split(" - ");
+
+  return (
+    <div className="flex items-center gap-4  rounded-lg p-4 shadow-sm bg-white">
+      {/* Event Image */}
+      <Image
+        src={event.image}
+        alt={event.title}
+        width={100}
+        height={100}
+        className="rounded"
+      />
+
+      {/* Event Info */}
+      <div className="flex-1">
+        <h2 className="text-lg font-bold text-blue-900">{event.title}</h2>
+        <p className="text-gray-600">📅 {startDate} - {endDate}</p>
+        <p className="text-gray-600">📍 {event.location}</p>
+        <p className="text-gray-600">🎥 {event.videos} recorded videos</p>
+      </div>
+
+      {/* Register Button */}
+      <button
+        className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600"
+        onClick={onRegister}
+      >
+        Register Now
+      </button>
+    </div>
+  );
+};
 
 export default EventCard;
