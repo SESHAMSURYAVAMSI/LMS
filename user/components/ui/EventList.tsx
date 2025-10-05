@@ -1,4 +1,5 @@
 "use client";
+
 import EventCard from "./EventCard";
 import { useState } from "react";
 import { FiFilter } from "react-icons/fi";
@@ -6,14 +7,17 @@ import { FiFilter } from "react-icons/fi";
 const events = [
   {
     id: 1,
+    slug: "fusicon-2026",
     title: "FUSICON 2026",
     date: "17 Apr 2026 - 18 Apr 2026",
     location: "Kolkata",
     videos: 12,
     image: "/event-logo.png",
+    
   },
   {
     id: 2,
+    slug: "pusicon-2026",
     title: "PUSICON 2026",
     date: "23 Apr 2026 - 25 Apr 2026",
     location: "Ranchi",
@@ -22,6 +26,7 @@ const events = [
   },
   {
     id: 3,
+    slug: "androcon-2026",
     title: "ANDROCON 2026",
     date: "2 May 2026 - 3 May 2026",
     location: "Hyderabad",
@@ -29,6 +34,7 @@ const events = [
     image: "/event-logo.png",
   },
 ];
+
 
 export default function EventList() {
   const [sortBy, setSortBy] = useState("Sort By");
@@ -76,7 +82,7 @@ export default function EventList() {
               {options.map((option) => (
                 <div
                   key={option}
-                  className="px-4 py-2 hover:bg-orange-500 cursor-pointer"
+                  className="px-4 py-2 hover:bg-orange-500 hover:text-white cursor-pointer"
                   onClick={() => {
                     setSortBy(option);
                     setFilterOpen(false);
@@ -93,11 +99,7 @@ export default function EventList() {
       {/* Events */}
       <div className="flex flex-col gap-4">
         {filteredEvents.map((event) => (
-          <EventCard
-            key={event.id}
-            event={event}
-            onRegister={() => console.log(`Register for ${event.title}`)}
-          />
+          <EventCard key={event.id} event={event} />         
         ))}
       </div>
     </div>
