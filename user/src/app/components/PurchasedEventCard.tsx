@@ -23,12 +23,12 @@ export default function PurchasedEventCard({ event }: { event: Event }) {
         <img
           src={event.image}
           alt={event.name}
-          className="w-24 h-24 rounded-lg bg-gray-100"
+          className="w-25 h-30 rounded-xl bg-gray-100"
         />
         <div>
           <h2
             onClick={() => router.push(`/purchased-events/${event.id}`)}
-            className="text-lg font-semibold text-blue-700 cursor-pointer hover:underline"
+            className="text-lg font-bold text-blue-700 cursor-pointer hover:underline"
           >
             {event.name}
           </h2>
