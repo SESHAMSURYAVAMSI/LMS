@@ -1,8 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { CalendarDays, MapPin, Video, Filter } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { FiFilter } from "react-icons/fi";
+import { CalendarDays, MapPin, Video } from "lucide-react";
 
 const purchasedEvents = [
   {
@@ -28,72 +29,77 @@ const purchasedEvents = [
 ];
 
 export default function PurchasedEventsPage() {
-  const [search, setSearch] = useState("");
-  const [sortOpen, setSortOpen] = useState(false);
-  const [sortOption, setSortOption] = useState("Newest First");
   const router = useRouter();
+  const [search, setSearch] = useState("");
+  const [sortBy, setSortBy] = useState("Sort By");
+  const [filterOpen, setFilterOpen] = useState(false);
 
-  const filtered = purchasedEvents
-    .filter((event) =>
-      event.name.toLowerCase().includes(search.toLowerCase())
-    )
-    .sort((a, b) => {
-      if (sortOption === "Newest First") {
-        return new Date(b.purchasedOn).getTime() - new Date(a.purchasedOn).getTime();
-      }
-      if (sortOption === "Popularity") {
-        return b.videos - a.videos;
-      }
-      return 0;
-    });
+  const options = ["Newest First", "Popularity"];
 
-  const handleSortSelect = (option: string) => {
-    setSortOption(option);
-    setSortOpen(false);
-  };
+  // Filter + Sort logic
+  let filteredEvents = purchasedEvents.filter((event) =>
+    event.name.toLowerCase().includes(search.toLowerCase())
+  );
+
+  if (sortBy === "Newest First") {
+    filteredEvents = filteredEvents.sort(
+      (a, b) =>
+        new Date(b.purchasedOn).getTime() -
+        new Date(a.purchasedOn).getTime()
+    );
+  } else if (sortBy === "Popularity") {
+    filteredEvents = filteredEvents.sort((a, b) => b.videos - a.videos);
+  }
 
   return (
-    <div className="p-6 space-y-6 bg-[#f8fafc] min-h-screen">
-      <div className="flex items-center justify-between relative">
-        <h1 className="text-2xl font-semibold">Purchased Events</h1>
+    <div className="p-6 min-h-screen bg-[#f8fafc]">
+      {/* Header */}
+      <h1 className="text-2xl font-semibold mb-6">Purchased Events</h1>
+
+      {/* Search + Sort Section */}
+      <div className="flex justify-between items-center mb-4">
+        {/* Search bar */}
+        <input
+          type="text"
+          placeholder="Search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="border rounded px-3 py-1 w-60"
+        />
+
+        {/* Sort Dropdown */}
         <div className="relative">
           <button
-            onClick={() => setSortOpen(!sortOpen)}
-            className="flex items-center gap-2 border border-orange-500 text-orange-500 font-medium px-4 py-2 rounded-md hover:bg-orange-50 transition"
+            onClick={() => setFilterOpen(!filterOpen)}
+            className="flex items-center gap-1 border border-orange-500 rounded px-3 py-1 text-orange-500
+                       bg-white hover:bg-orange-50 focus:bg-orange-500 focus:text-white focus:outline-none"
           >
-            <Filter className="w-4 h-4 text-orange-500" />
-            <span>Sort By</span>
+            <FiFilter size={18} />
+            <span>{sortBy}</span>
           </button>
-          {sortOpen && (
-            <div className="absolute right-0 mt-2 w-44 bg-white border border-gray-200 rounded-md shadow-lg overflow-hidden z-20">
-              {["Newest First", "Popularity"].map((option) => (
-                <button
+
+          {filterOpen && (
+            <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-md z-10">
+              {options.map((option) => (
+                <div
                   key={option}
-                  onClick={() => handleSortSelect(option)}
-                  className={`w-full text-left px-4 py-2 text-sm ${
-                    sortOption === option
-                      ? "bg-orange-500 text-white font-medium"
-                      : "text-gray-800 hover:bg-orange-50"
-                  }`}
+                  className="px-4 py-2 hover:bg-orange-500 hover:text-white cursor-pointer"
+                  onClick={() => {
+                    setSortBy(option);
+                    setFilterOpen(false);
+                  }}
                 >
                   {option}
-                </button>
+                </div>
               ))}
             </div>
           )}
         </div>
       </div>
 
-      <input
-        type="text"
-        placeholder="Search"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        className="border rounded px-3 py-1 w-full md:w-1/2"
-      />
-
+      {/* Event Cards */}
       <div className="space-y-4 mt-4">
-        {filtered.map((event) => (
+        {filteredEvents.map((event) => (
           <div
             key={event.id}
             className="flex justify-between items-center bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition"
@@ -139,6 +145,12 @@ export default function PurchasedEventsPage() {
             </div>
           </div>
         ))}
+
+        {filteredEvents.length === 0 && (
+          <p className="text-center text-gray-500 mt-10">
+            No events found.
+          </p>
+        )}
       </div>
     </div>
   );

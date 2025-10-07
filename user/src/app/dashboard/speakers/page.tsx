@@ -1,63 +1,64 @@
 "use client";
 
-import EventCard from "@components/EventCard";
 import { useState } from "react";
 import { FiFilter } from "react-icons/fi";
+import SpeakersList from "./SpeakersList";
 
-const events = [
+const speakersData = [
   {
     id: 1,
-    slug: "fusicon-2026",
-    title: "FUSICON 2026",
-    date: "17 Apr 2026 - 18 Apr 2026",
-    location: "Kolkata",
-    videos: 12,
-    image: "/event-logo.png",
-    
+    name: "Dr. R.V. Sudarshan",
+    institution: "AIIMS Delhi",
+    location: "Chennai, Tamil Nadu",
+    videos: 4,
+    image: "/doctor.png",
   },
   {
     id: 2,
-    slug: "pusicon-2026",
-    title: "PUSICON 2026",
-    date: "23 Apr 2026 - 25 Apr 2026",
-    location: "Ranchi",
-    videos: 12,
-    image: "/event-logo.png",
+    name: "Dr. Anita Sharma",
+    institution: "CMC Vellore",
+    location: "Vellore, Tamil Nadu",
+    videos: 8,
+    image: "/doctor.png",
   },
   {
     id: 3,
-    slug: "androcon-2026",
-    title: "ANDROCON 2026",
-    date: "2 May 2026 - 3 May 2026",
-    location: "Hyderabad",
-    videos: 12,
-    image: "/event-logo.png",
+    name: "Dr. Karan Rao",
+    institution: "NIMS Hyderabad",
+    location: "Hyderabad, Telangana",
+    videos: 3,
+    image: "/doctor.png",
   },
 ];
 
-
-export default function EventList() {
+export default function SpeakersPage() {
   const [sortBy, setSortBy] = useState("Sort By");
   const [search, setSearch] = useState("");
   const [filterOpen, setFilterOpen] = useState(false);
 
-  const options = ["Newest First", "Popularity"];
+  const options = ["Name (A–Z)", "Most Videos"];
 
-  // Simple search + sort (newest first = by id descending)
-  let filteredEvents = events.filter((e) =>
-    e.title.toLowerCase().includes(search.toLowerCase())
+  // Search + Sort logic
+  let filteredSpeakers = speakersData.filter((s) =>
+    s.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  if (sortBy === "Newest First") {
-    filteredEvents = filteredEvents.sort((a, b) => b.id - a.id);
-  } else if (sortBy === "Popularity") {
-    filteredEvents = filteredEvents.sort((a, b) => b.videos - a.videos);
+  if (sortBy === "Name (A–Z)") {
+    filteredSpeakers = filteredSpeakers.sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+  } else if (sortBy === "Most Videos") {
+    filteredSpeakers = filteredSpeakers.sort((a, b) => b.videos - a.videos);
   }
 
   return (
-    <div>
-      {/* Search and Sort */}
+    <div className="p-6">
+      {/* Header */}
+      <h1 className="text-2xl font-semibold mb-6">Speakers</h1>
+
+      {/* Search + Sort */}
       <div className="flex justify-between items-center mb-4">
+        {/* Search */}
         <input
           type="text"
           placeholder="Search"
@@ -66,12 +67,12 @@ export default function EventList() {
           className="border rounded px-3 py-1 w-100"
         />
 
-        {/* Filter Dropdown */}
+        {/* Sort Dropdown */}
         <div className="relative">
           <button
             onClick={() => setFilterOpen(!filterOpen)}
             className="flex items-center gap-1 border border-orange-500 rounded px-3 py-1 text-orange-500
-                      bg-white hover:bg-orange-50 focus:bg-orange-500 focus:text-white focus:outline-none"
+                       bg-white hover:bg-orange-50 focus:bg-orange-500 focus:text-white focus:outline-none"
           >
             <FiFilter size={18} />
             <span>{sortBy}</span>
@@ -96,12 +97,8 @@ export default function EventList() {
         </div>
       </div>
 
-      {/* Events */}
-      <div className="flex flex-col gap-4">
-        {filteredEvents.map((event) => (
-          <EventCard key={event.id} event={event} />         
-        ))}
-      </div>
+      {/* Speakers Grid */}
+      <SpeakersList speakers={filteredSpeakers} />
     </div>
   );
 }
