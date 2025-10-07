@@ -1,5 +1,5 @@
 "use client";
-import EventList from "../../../../components/ui/EventList";
+import EventList from "@/components/EventList";
 
 
 export default function EventsPage() {

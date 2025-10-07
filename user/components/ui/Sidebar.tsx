@@ -11,7 +11,7 @@ function cn(...classes: (string | false | undefined)[]) {
 
 const menuItems = [
   { name: "Events", path: "/dashboard/events", icon: "📅" },
-  { name: "Purchased Events", path: "/dashboard/purchased", icon: "🎟️" },
+  { name: "Purchased Events", path: "/dashboard/purchased-events", icon: "🎟️" },
   { name: "Speakers", path: "/dashboard/speakers", icon: "🎤" },
   { name: "My Profile", path: "/dashboard/profile", icon: "👤" },
   { name: "My Purchases", path: "/dashboard/purchases", icon: "🛒" },
