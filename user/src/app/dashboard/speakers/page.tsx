@@ -36,18 +36,18 @@ export default function SpeakersPage() {
   const [search, setSearch] = useState("");
   const [filterOpen, setFilterOpen] = useState(false);
 
-  const options = ["Name (A–Z)", "Most Videos"];
+  const options = ["Newest First", "Popularity"];
 
   // Search + Sort logic
   let filteredSpeakers = speakersData.filter((s) =>
     s.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  if (sortBy === "Name (A–Z)") {
+  if (sortBy === "Newest First") {
     filteredSpeakers = filteredSpeakers.sort((a, b) =>
       a.name.localeCompare(b.name)
     );
-  } else if (sortBy === "Most Videos") {
+  } else if (sortBy === "Popularity") {
     filteredSpeakers = filteredSpeakers.sort((a, b) => b.videos - a.videos);
   }
 

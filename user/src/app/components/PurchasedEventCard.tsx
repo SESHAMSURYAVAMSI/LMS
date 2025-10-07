@@ -1,9 +1,9 @@
 "use client";
 
-import { CalendarDays, MapPin, Video } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { CalendarDays, MapPin, Video } from "lucide-react";
 
-interface PurchasedEventCardProps {
+interface Event {
   id: string;
   name: string;
   startDate: string;
@@ -14,65 +14,46 @@ interface PurchasedEventCardProps {
   image: string;
 }
 
-export default function PurchasedEventCard({
-  id,
-  name,
-  startDate,
-  endDate,
-  location,
-  videos,
-  purchasedOn,
-  image,
-}: PurchasedEventCardProps) {
+export default function PurchasedEventCard({ event }: { event: Event }) {
   const router = useRouter();
 
-  const handleClick = () => {
-    router.push(`/purchased-events/${id}`);
-  };
-
   return (
-    <div className="flex justify-between items-center bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition">
-      {/* Left side */}
+    <div className="flex justify-between items-center bg-white p-4 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition">
       <div className="flex items-center gap-4">
         <img
-          src={image}
-          alt={name}
-          className="w-24 h-24 rounded-lg bg-gray-100 object-cover"
+          src={event.image}
+          alt={event.name}
+          className="w-24 h-24 rounded-lg bg-gray-100"
         />
-
         <div>
           <h2
-            onClick={handleClick}
+            onClick={() => router.push(`/purchased-events/${event.id}`)}
             className="text-lg font-semibold text-blue-700 cursor-pointer hover:underline"
           >
-            {name}
+            {event.name}
           </h2>
-
           <p className="text-sm text-gray-600 flex items-center gap-2 mt-1">
             <CalendarDays className="w-4 h-4" />
-            {startDate} - {endDate}
+            {event.startDate} - {event.endDate}
           </p>
-
           <p className="text-sm text-gray-600 flex items-center gap-2 mt-1">
             <MapPin className="w-4 h-4" />
-            {location}
+            {event.location}
           </p>
-
           <p className="text-sm text-gray-600 flex items-center gap-2 mt-1">
             <Video className="w-4 h-4" />
-            {videos} recorded videos
+            {event.videos} recorded videos
           </p>
         </div>
       </div>
 
-      {/* Right side */}
       <div className="text-right">
         <p className="text-xs text-gray-500 mb-2">
-          Purchased on {purchasedOn}
+          Purchased on {event.purchasedOn}
         </p>
         <button
-          onClick={handleClick}
-          className="bg-orange-500 text-white text-sm px-4 py-2 rounded-lg hover:bg-orange-600"
+          onClick={() => router.push(`/purchased-events/${event.id}`)}
+          className="bg-orange-500 text-white text-sm px-4 py-2 rounded-lg hover:bg-orange-600 transition"
         >
           View Event
         </button>
