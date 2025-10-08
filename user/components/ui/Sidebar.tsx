@@ -10,11 +10,11 @@ function cn(...classes: (string | false | undefined)[]) {
 }
 
 const menuItems = [
-  { name: "Events", path: "/dashboard/events", icon: "📅" },
-  { name: "Purchased Events", path: "/dashboard/purchased-events", icon: "🎟️" },
-  { name: "Speakers", path: "/dashboard/speakers", icon: "🎤" },
-  { name: "My Profile", path: "/dashboard/profile", icon: "👤" },
-  { name: "My Purchases", path: "/dashboard/purchases", icon: "🛒" },
+  { name: "Events", path: "/dashboard/events", icon: "/icons/events.png" },
+  { name: "Registered Events", path: "/dashboard/purchased-events", icon: "/icons/purchased-events.png" },
+  { name: "Speakers", path: "/dashboard/speakers", icon: "/icons/speaker.png" },
+  { name: "My Profile", path: "/dashboard/profile", icon: "/icons/my-profile.png" },
+  { name: "My Purchases", path: "/dashboard/purchases", icon: "/icons/my-purchases.png" },
 ];
 
 export default function Sidebar() {
@@ -29,11 +29,17 @@ export default function Sidebar() {
             key={item.path}
             href={item.path}
             className={cn(
-              "flex items-center gap-2 p-3 rounded-lg text-gray-700 hover:bg-orange-100 transition-colors",
+              "flex items-center gap-3 p-3 rounded-lg text-gray-700 hover:bg-orange-100 transition-colors",
               pathname === item.path && "bg-orange-500 text-white"
             )}
           >
-            <span>{item.icon}</span>
+            <Image
+              src={item.icon}
+              alt={item.name}
+              width={24}
+              height={24}
+              className="object-contain"
+            />
             <span>{item.name}</span>
           </Link>
         ))}
